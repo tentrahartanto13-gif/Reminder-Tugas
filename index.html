@@ -1,9 +1,10 @@
 <!DOCTYPE html>
-<html lang="id">
+<html lang="en">
 <head>
-  <meta charset="UTF-8">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Task Reminder</title>
-  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="style.css" />
 </head>
 <body>
 
@@ -13,25 +14,26 @@
   </header>
 
   <main>
-    <section id="task-list"></section>
-
-    <!-- Modal -->
-    <div id="taskModal" class="modal">
-      <div class="modal-content">
-        <h3>Tambah Tugas Baru</h3>
-
-        <label>Nama Tugas</label>
-        <input type="text" id="taskTitle">
-
-        <label>Deadline</label>
-        <input type="datetime-local" id="taskDue">
-
-        <button id="saveTaskBtn" class="btn-primary">Simpan</button>
-        <button id="closeModal" class="btn-secondary">Batal</button>
-      </div>
-    </div>
+    <section id="task-list" class="task-container"></section>
   </main>
 
+  <!-- MODAL -->
+  <div id="taskModal" class="modal">
+    <div class="modal-content">
+      <h3>Tambah Tugas Baru</h3>
+      <label>Nama Tugas</label>
+      <input type="text" id="taskTitle">
+
+      <label>Deadline</label>
+      <input type="datetime-local" id="taskDue">
+
+      <button id="saveTaskBtn" class="btn-primary">Simpan</button>
+      <button id="closeModal" class="btn-secondary">Batal</button>
+    </div>
+  </div>
+
+  <script src="tasks.js"></script>
   <script src="script.js"></script>
+
 </body>
 </html>
