@@ -8,22 +8,23 @@ const taskList = document.getElementById("task-list");
 let tasks = [];
 
 // OPEN MODAL
-addTaskBtn.onclick = () => {
+addTaskBtn.addEventListener("click", () => {
   taskModal.style.display = "flex";
-};
+});
 
 // CLOSE MODAL
-closeModal.onclick = () => {
+closeModal.addEventListener("click", () => {
   taskModal.style.display = "none";
-};
+});
 
-window.onclick = (e) => {
+// CLOSE MODAL BY CLICKING OUTSIDE
+window.addEventListener("click", (e) => {
   if (e.target === taskModal) taskModal.style.display = "none";
-};
+});
 
 // SAVE TASK
-saveTaskBtn.onclick = () => {
-  const title = document.getElementById("taskTitle").value;
+saveTaskBtn.addEventListener("click", () => {
+  const title = document.getElementById("taskTitle").value.trim();
   const dueDate = document.getElementById("taskDue").value;
 
   if (!title || !dueDate) {
@@ -34,10 +35,15 @@ saveTaskBtn.onclick = () => {
   tasks.push({ title, due: dueDate });
 
   renderTasks();
-  taskModal.style.display = "none";
-};
 
-// DISPLAY TASKS
+  taskModal.style.display = "none";
+
+  // RESET INPUT
+  document.getElementById("taskTitle").value = "";
+  document.getElementById("taskDue").value = "";
+});
+
+// RENDER TASKS
 function renderTasks() {
   taskList.innerHTML = "";
 
@@ -50,14 +56,8 @@ function renderTasks() {
     div.innerHTML = `
       <div class="task-title">${task.title}</div>
       <div class="task-date">Deadline: ${formattedDate}</div>
-
-      <button class="add-calendar" onclick="addToCalendar(${index})">
-        Tambah ke Google Calendar
-      </button>
-
-      <button class="delete-task" onclick="deleteTask(${index})">
-        Hapus
-      </button>
+      <button class="add-calendar" onclick="addToCalendar(${index})">Tambah ke Google Calendar</button>
+      <button class="delete-task" onclick="deleteTask(${index})">Hapus</button>
     `;
 
     taskList.appendChild(div);
@@ -69,7 +69,7 @@ function addToCalendar(index) {
   const task = tasks[index];
 
   const start = new Date(task.due);
-  const end = new Date(start.getTime() + 1 * 60 * 60 * 1000);
+  const end = new Date(start.getTime() + 60 * 60 * 1000); // 1 jam
 
   const format = (date) =>
     date.toISOString().replace(/[-:]/g, "").split(".")[0] + "Z";
@@ -84,6 +84,12 @@ function addToCalendar(index) {
 }
 
 // DELETE TASK
+function deleteTask(index) {
+  if (confirm("Yakin mau hapus tugas ini?")) {
+    tasks.splice(index, 1);
+    renderTasks();
+  }
+}
 function deleteTask(index) {
   if (confirm("Yakin mau hapus tugas ini?")) {
     tasks.splice(index, 1);
