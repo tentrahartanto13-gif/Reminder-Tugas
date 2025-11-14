@@ -1,25 +1,26 @@
 <!DOCTYPE html>
-<html lang="id">
+<html lang="en">
 <head>
   <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Task Reminder</title>
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
+
   <header class="header">
     <h1>Task Reminder Dashboard</h1>
     <button id="addTaskBtn" class="btn-primary">+ Tambah Tugas</button>
   </header>
 
   <main>
-    <section id="task-list"></section>
+    <section id="task-list" class="task-container"></section>
   </main>
 
   <!-- MODAL -->
   <div id="taskModal" class="modal">
     <div class="modal-content">
       <h3>Tambah Tugas Baru</h3>
-
       <label>Nama Tugas</label>
       <input type="text" id="taskTitle">
 
@@ -30,10 +31,6 @@
       <button id="closeModal" class="btn-secondary">Batal</button>
     </div>
   </div>
-
-  <script src="script.js" defer></script>
-</body>
-</html>
 
   <script src="tasks.js"></script>
   <script src="script.js"></script>
