@@ -9,7 +9,7 @@ let tasks = [];
 
 // ---- MODAL ----
 addTaskBtn.onclick = () => {
-  taskModal.style.display = "block";
+  taskModal.style.display = "flex";
 };
 
 closeModal.onclick = () => {
@@ -37,6 +37,9 @@ saveTaskBtn.onclick = () => {
 
   renderTasks();
   taskModal.style.display = "none";
+
+  document.getElementById("taskTitle").value = "";
+  document.getElementById("taskDue").value = "";
 };
 
 // ---- TAMPILKAN LIST ----
@@ -64,16 +67,15 @@ function addToCalendar(index) {
   const task = tasks[index];
 
   const start = new Date(task.due);
-  const end = new Date(start.getTime() + 1 * 60 * 60 * 1000);
+  const end = new Date(start.getTime() + 60 * 60 * 1000); // +1 jam
 
   const format = (date) =>
     date.toISOString().replace(/[-:]/g, "").split(".")[0] + "Z";
 
-  const link =
-    "https://calendar.google.com/calendar/render?action=TEMPLATE" +
-    &text=${encodeURIComponent(task.title)} +
-    &dates=${format(start)}/${format(end)} +
-    "&ctz=Asia/Jakarta";
+  const link = `https://calendar.google.com/calendar/render?action=TEMPLATE
+&text=${encodeURIComponent(task.title)}
+&dates=${format(start)}/${format(end)}
+&ctz=Asia/Jakarta`.replace(/\n/g, "");
 
   window.open(link, "_blank");
 }
