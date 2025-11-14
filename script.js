@@ -1,4 +1,4 @@
-// ELEMENTS
+// Elemen
 const addTaskBtn = document.getElementById("addTaskBtn");
 const taskModal = document.getElementById("taskModal");
 const closeModal = document.getElementById("closeModal");
@@ -7,24 +7,22 @@ const taskList = document.getElementById("task-list");
 
 let tasks = [];
 
-// OPEN MODAL
-addTaskBtn.addEventListener("click", () => {
+// ---- MODAL ----
+addTaskBtn.onclick = () => {
   taskModal.style.display = "flex";
-});
+};
 
-// CLOSE MODAL
-closeModal.addEventListener("click", () => {
+closeModal.onclick = () => {
   taskModal.style.display = "none";
-});
+};
 
-// CLOSE MODAL BY CLICKING OUTSIDE
-window.addEventListener("click", (e) => {
+window.onclick = (e) => {
   if (e.target === taskModal) taskModal.style.display = "none";
-});
+};
 
-// SAVE TASK
-saveTaskBtn.addEventListener("click", () => {
-  const title = document.getElementById("taskTitle").value.trim();
+// ---- SIMPAN TUGAS ----
+saveTaskBtn.onclick = () => {
+  const title = document.getElementById("taskTitle").value;
   const dueDate = document.getElementById("taskDue").value;
 
   if (!title || !dueDate) {
@@ -32,17 +30,19 @@ saveTaskBtn.addEventListener("click", () => {
     return;
   }
 
-  tasks.push({ title, due: dueDate });
-  renderTasks();
+  tasks.push({
+    title: title,
+    due: dueDate
+  });
 
+  renderTasks();
   taskModal.style.display = "none";
 
-  // RESET INPUT
   document.getElementById("taskTitle").value = "";
   document.getElementById("taskDue").value = "";
-});
+};
 
-// RENDER TASKS
+// ---- TAMPILKAN LIST ----
 function renderTasks() {
   taskList.innerHTML = "";
 
@@ -56,36 +56,26 @@ function renderTasks() {
       <div class="task-title">${task.title}</div>
       <div class="task-date">Deadline: ${formattedDate}</div>
       <button class="add-calendar" onclick="addToCalendar(${index})">Tambah ke Google Calendar</button>
-      <button class="delete-task" onclick="deleteTask(${index})">Hapus</button>
     `;
 
     taskList.appendChild(div);
   });
 }
 
-// ADD TO GOOGLE CALENDAR
+// ---- ADD TO GOOGLE CALENDAR ----
 function addToCalendar(index) {
   const task = tasks[index];
 
   const start = new Date(task.due);
-  const end = new Date(start.getTime() + 60 * 60 * 1000); // 1 jam
+  const end = new Date(start.getTime() + 60 * 60 * 1000); // +1 jam
 
   const format = (date) =>
     date.toISOString().replace(/[-:]/g, "").split(".")[0] + "Z";
 
-  const link =
-    https://calendar.google.com/calendar/render?action=TEMPLATE +
-    &text=${encodeURIComponent(task.title)} +
-    &dates=${format(start)}/${format(end)} +
-    &ctz=Asia/Jakarta;
+  const link = `https://calendar.google.com/calendar/render?action=TEMPLATE
+&text=${encodeURIComponent(task.title)}
+&dates=${format(start)}/${format(end)}
+&ctz=Asia/Jakarta`.replace(/\n/g, "");
 
   window.open(link, "_blank");
-}
-
-// DELETE TASK
-function deleteTask(index) {
-  if (confirm("Yakin mau hapus tugas ini?")) {
-    tasks.splice(index, 1);
-    renderTasks();
-  }
 }
