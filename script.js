@@ -33,7 +33,6 @@ saveTaskBtn.addEventListener("click", () => {
   }
 
   tasks.push({ title, due: dueDate });
-
   renderTasks();
 
   taskModal.style.display = "none";
@@ -84,12 +83,6 @@ function addToCalendar(index) {
 }
 
 // DELETE TASK
-function deleteTask(index) {
-  if (confirm("Yakin mau hapus tugas ini?")) {
-    tasks.splice(index, 1);
-    renderTasks();
-  }
-}
 function deleteTask(index) {
   if (confirm("Yakin mau hapus tugas ini?")) {
     tasks.splice(index, 1);
